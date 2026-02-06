@@ -1,29 +1,27 @@
-name: Scientific Calculator CI
+name: Deploy Scientific Calculator to GitHub Pages
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: List project files
-      run: ls -la
+    - name: Upload site files
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: .
 
-    - name: Validate HTML file
-      run: |
-        if [ ! -f index.html ]; then
-          echo "index.html missing"
-          exit 1
-        fi
-
-    - name: CI Passed
-      run: echo "Scientific Calculator build successful ✅"
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v4
