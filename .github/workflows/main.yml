@@ -1,0 +1,29 @@
+name: Scientific Calculator CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: List project files
+      run: ls -la
+
+    - name: Validate HTML file
+      run: |
+        if [ ! -f index.html ]; then
+          echo "index.html missing"
+          exit 1
+        fi
+
+    - name: CI Passed
+      run: echo "Scientific Calculator build successful ✅"
